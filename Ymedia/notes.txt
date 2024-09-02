@@ -1,0 +1,80 @@
+import { createBrowserRouter, Outlet, redirect } from "react-router-dom";
+import CmsSidebar from "./components/molecules/CmsSidebar";
+import Home from "./pages/publicPage/Home";
+import JobDetail from "./pages/publicPage/JobDetail";
+import NavbarPub from "./components/organisms/Navbar";
+import Login from "./pages/auth/login";
+import CmsHome from "./pages/cmsPage/CmsHome";
+import CmsEditJob from "./pages/cmsPage/cmsEditJob";
+import CmsAddJob from "./pages/cmsPage/cmsAddJob";
+import CmsAddUser from "./pages/cmsPage/CmsAddUser";
+import CmsCompanyList from "./pages/cmsPage/CmsCompanyList";
+
+const router = createBrowserRouter([
+  {
+    element: (
+      <>
+        <NavbarPub />
+        <Outlet />
+      </>
+    ),
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "/jobDetail/:id",
+        element: <JobDetail />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    loader: () => {
+      if (localStorage.getItem("token")) {
+        return redirect("/");
+      }
+      return null;
+    },
+  },
+  {
+    loader: () => {
+      if (!localStorage.getItem("token")) {
+        return redirect("/login");
+      }
+      return null;
+    },
+    element: (
+      <div className="flex">
+        <CmsSidebar />
+        <Outlet />
+      </div>
+    ),
+    children: [
+      {
+        path: "/cms",
+        element: <CmsHome />,
+      },
+      {
+        path: "/cms/companies",
+        element: <CmsCompanyList />,
+      },
+      {
+        path: "/cms/add/user",
+        element: <CmsAddUser />,
+      },
+      {
+        path: "/cms/add/job",
+        element: <CmsAddJob />,
+      },
+      {
+        path: "/cms/edit/job/:id",
+        element: <CmsEditJob />,
+      },
+    ],
+  },
+]);
+
+export default router;
