@@ -1,11 +1,12 @@
+import PropTypes from "prop-types";
 import { AuthForm } from "../../../components/Organism/AuthForm";
 import illustration from "../../../assets/login.png";
 import { Card, Alert } from "flowbite-react";
 
 const LoginPageView = ({
-  email,
+  emailOrUsername,
   password,
-  handleEmailChange,
+  handleEmailOrUsernameChange,
   handlePasswordChange,
   handleSubmit,
   error,
@@ -13,7 +14,7 @@ const LoginPageView = ({
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg flex overflow-hidden w-full max-w-4xl">
-        <div className="hidden md:flex md:w-1/2  items-center justify-center p-10">
+        <div className="hidden md:flex md:w-1/2 items-center justify-center p-10">
           <img
             src={illustration}
             alt="Login Illustration"
@@ -29,23 +30,35 @@ const LoginPageView = ({
               </Alert>
             )}
             <AuthForm
-              email={email}
-              passwod={password}
-              handleEmailChange={handleEmailChange}
+              emailOrUsername={emailOrUsername}
+              password={password} // Fixed typo
+              handleEmailOrUsernameChange={handleEmailOrUsernameChange}
               handlePasswordChange={handlePasswordChange}
               handleSubmit={handleSubmit}
-              illustration={illustration}
             />
           </Card>
           <div className="text-center mt-4">
             <a href="#" className="text-blue-600 hover:underline">
-              Don&apos;t have an accout?
+              Don&apos;t have an account?
             </a>
           </div>
         </div>
       </div>
     </div>
   );
+};
+
+LoginPageView.propTypes = {
+  emailOrUsername: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  handleEmailOrUsernameChange: PropTypes.func.isRequired,
+  handlePasswordChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  error: PropTypes.string,
+};
+
+LoginPageView.defaultProps = {
+  error: "",
 };
 
 export default LoginPageView;

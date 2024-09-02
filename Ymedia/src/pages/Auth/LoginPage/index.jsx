@@ -3,13 +3,13 @@ import LoginPageView from "./view";
 import { postLogin } from "../../../utils/api";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const fetchPostLogin = async () => {
     try {
-      const response = await postLogin(email, password);
+      const response = await postLogin(emailOrUsername, emailOrUsername);
       console.log(response);
     } catch (error) {
       console.log(error, "????");
@@ -18,8 +18,8 @@ const LoginPage = () => {
     }
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleEmailOrUsernameChange = (e) => {
+    setEmailOrUsername(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -34,9 +34,9 @@ const LoginPage = () => {
   return (
     <LoginPageView
       error={error}
-      email={email}
+      emailOrUsername={emailOrUsername}
       passwod={password}
-      handleEmailChange={handleEmailChange}
+      handleEmailOrUsernameChange={handleEmailOrUsernameChange}
       handlePasswordChange={handlePasswordChange}
       handleSubmit={handleSubmit}
     />
